@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:html5="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"/>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous"/>
+        <link href="Login/CSS/EstiloLogin.css" rel="stylesheet" type="text/css"/>
+        <link href="BarraNav/CSS/BarraNav.css" rel="stylesheet" type="text/css"/>
+        <link href="BarraNav/CSS/Prueba/barraprueba.css" rel="stylesheet" type="text/css"/>
+
+
+    </h:head>
+    <h:body id="body">
+        <p:growl id="msn" life="3000"/>
+        <!-- barra de navegacion -->
+        <div class="header">
+            <section class="wrapper">
+                <nav>
+                    <ul>
+                        <li><h:link outcome="index" value="Inicio" /></li>
+                    </ul>
+                </nav>
+            </section>
+        </div>
+
+        <!-- Login -->
+        <div class="container">
+            <div class="login-container">
+                <div class="register">
+
+                    <h2>Registrarse</h2>
+                    <h:form id="form">
+
+
+                        <p:inputText value="#{usuarioSesion.usuReg.nombre}" placeholder="Nombres" />
+                        <p:inputText value="#{usuarioSesion.usuReg.apellido}" placeholder="Apellidos" />
+                        <p:inputText placeholder="Correo Electronico" value="#{usuarioSesion.usuReg.correo}" />
+                        <p:inputText placeholder="Contraseña" type="password" value="#{usuarioSesion.usuReg.contrasena}"/>
+
+                        <h:outputLabel value="Direccion" for="tipoDireccion" />
+                        <h:selectOneMenu id="tipoDireccion" value="#{usuarioSesion.tipoDireccion.idDireccion}" required="true">
+                            <f:selectItems value="#{usuarioSesion.tipodirecciones}" var="di" itemLabel="#{di.descripcion}" itemValue="#{di.idDireccion}"/>
+                        </h:selectOneMenu>
+                        <br/>
+                        <br/>
+                        <p:inputText placeholder="Direccion" type="direccion" value="#{usuarioSesion.usuReg.detalleDireccion}"/>
+
+                        <h:outputLabel value="Telefono" for="tipoTelefono" />
+                        <h:selectOneMenu id="tipoTelefono" value="#{usuarioSesion.tipoTelefono.idTelefono}" required="true">
+                            <f:selectItems value="#{usuarioSesion.tipotelefonos}" var="te" itemLabel="#{te.tipoTelefono}" itemValue="#{te.idTelefono}"/>
+                        </h:selectOneMenu>
+                        <br/>
+                        <br/>
+                        <p:inputText placeholder="Telefono" type="telefono" value="#{usuarioSesion.usuReg.numeroTelefono}"/>
+
+
+                        <h:outputLabel value="Documento" for="tipoIdentificacion" />
+                        <h:selectOneMenu id="tipoIdentificacion" value="#{usuarioSesion.tipoIdentificacion.idIdentificación}" required="true">
+                            <f:selectItems value="#{usuarioSesion.tipoidentificaciones}" var="idt" itemLabel="#{idt.tipoIdentificacion}" itemValue="#{idt.idIdentificación}"/>
+                        </h:selectOneMenu>
+                        <br/>
+                        <br/>
+                        <p:inputText placeholder="Identificacion" type="identificacion" value="#{usuarioSesion.usuReg.numeroDocumento}"/>
+
+                        <h:outputLabel value="Rol" for="rol" style="display: none" />
+                        <h:selectOneMenu id="rol" value="#{usuarioSesion.rol.idRol}" required="true" style="display: none">
+                            <f:selectItems value="#{usuarioSesion.roles}" var="ro" itemLabel="#{ro.tipoRol}" itemValue="#{ro.idRol}"/>
+                        </h:selectOneMenu>
+
+
+                        <br/>
+                        <br/>
+                        
+                        <p:inputText  class="form-control" placeholder="estado" type="text" value="#{usuarioSesion.usuReg.estado}" style="display: none"/>
+
+                        <h:commandLink style="text-decoration: none; width: auto;padding: 10px;background: #f17108;color: #fff;font-size: 12px;box-shadow: 0 0 3px 0 rgb(0 0 0 / 20%); cursor: pointer;" class="btn btn-primary" action="#{usuarioSesion.registrarUsuario()}" value="Registar"/>
+
+                        
+
+                    </h:form>
+
+                </div>
+                <div class="login" method="POST">
+                    <h2>Iniciar Sesión</h2>
+
+                    <h:form id="form2">
+
+                        <h:inputText value="#{usuarioSesion.correoIn}" class="form-control" requiredMessage="Se requiere un correo valido !!" required="true" html5:placeholder="Correo Electronico"></h:inputText>
+
+                        <h:inputSecret value="#{usuarioSesion.claveIn}" class="form-control" requiredMessage="Se requiere una clave valida !!"  required="true" html5:placeholder="Clave"/>
+
+                        <h:commandButton action="#{usuarioSesion.validarUsuario()}" style="text-decoration: none; width: auto;padding: 10px;background: #f17108;color: #fff;font-size: 12px;box-shadow: 0 0 3px 0 rgb(0 0 0 / 20%); cursor: pointer;" class="btn btn-primary" value="Log In"></h:commandButton>
+
+                        
+                        <br/>
+                    </h:form>
+
+                    
+
+                </div>
+            </div>
+        </div>
+
+
+    </h:body>
+</html>

@@ -1,0 +1,127 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>.
+
+        <title>Agendamiento de Citas</title>
+        <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+        <link href="CSS/style.css" rel="stylesheet" type="text/css"/>
+        <link href="CSS/wickedpicker.css" rel="stylesheet" type="text/css"/>
+        <link href="../BarraNav/CSS/Prueba/barraprueba.css" rel="stylesheet" type="text/css"/>
+
+    </h:head>
+    <h:body>
+
+        <!--Barra de Navegacion-->
+
+        <div class="header">
+            <section class="wrapper">
+                <nav>
+                    <ul>
+                        <ui:param name="nombreUser" value="#{usuarioSesion.usuLog.nombre} #{usuarioSesion.usuLog.apellido}"/>
+                        <a href="#" class="simple-text" >${nombreUser}</a>
+                        <li><a href="index.xhtml">Inicio</a></li>
+
+                        <li><a href="#about">Quienes Somos</a></li>
+                        <li><a href="#service">Servicios</a></li>
+                        <li><a href="#test">Sobre Nosotros</a></li>
+                        <li><a href="#contact">Contactanos</a></li>
+                    </ul>
+                </nav>
+            </section>
+        </div>
+
+        <!--background-->
+        <div class="bg-agile">
+            <div class="book-appointment">
+                <h2>Agenda tu Cita</h2>
+
+                <h:form >
+                    <h:column>
+                        <div id="resultados_ajax" class="gaps"></div>
+                        <div class="left-agileits-w3layouts same">
+                            <img src="Gloss Nail G..jpg"/>
+                        </div>
+
+                        <div class="right-agileinfo same">
+
+                            <div class="gaps">
+
+                                <h:panelGrid columns="1">
+                                    <h:selectOneMenu   class="form-control" id="estado" value="#{agendarCitas.estadoCita.idEstadoCita}" 
+                                                       required="true" style="display: none">
+                                        <f:selectItems value="#{agendarCitas.estadoCitas}" var="ec" itemLabel="#{ec.descripcion}" itemValue="#{ec.idEstadoCita}"/>
+                                    </h:selectOneMenu>
+                                    <br/>
+                                    <h:outputLabel  class="form-label" value="Empleado" for="empleado" />
+                                    <h:selectOneMenu   class="form-control" id="empleado" value="#{agendarCitas.usuario.idUsuario}" required="true">
+                                        <f:selectItems value="#{agendarCitas.usuarios}" var="e" itemLabel="#{e.nombre}" itemValue="#{e.idUsuario}"/>
+                                    </h:selectOneMenu>
+                                    <br/>  
+                                    <h:outputLabel  class="form-label" value="Servicio" for="servicio" />
+                                    <h:selectOneMenu   class="form-control" id="servicio" value="#{agendarCitas.servicio.codigoServicio}" required="true">
+                                        <f:selectItems value="#{agendarCitas.servicios}" var="ser" itemLabel="#{ser.nombre}" itemValue="#{ser.codigoServicio}"/>
+                                    </h:selectOneMenu>
+                                    <br/>     
+                                    <h:outputLabel class="form-label" value="Seleccioar Fecha" for="fecha"/> 
+                                    <p:calendar id="fecha" class="form-control" value="#{agendarCitas.citaReg.fecha}"/>
+                                    <br/>
+                                       
+                                    
+                                </h:panelGrid>
+                            </div>
+                        </div>
+
+                        <div class="clear"></div>
+
+                        <h:commandLink class="btn btn-primary" action="#{agendarCitas.registrarCita()}" value="Registar"/>
+                    </h:column>
+                </h:form>
+            </div>
+        </div>
+
+        <!--copyright-->
+        <div class="copy w3ls">
+            <p><a href="#" target="_blank"></a> </p>
+        </div>
+        <!--//copyright-->
+        <script type="text/javascript" src="Citas/JS/jquery-2.1.4.min.js"></script>
+        <script type="text/javascript" src="Citas/JS/wickedpicker.js"></script>
+        <script type="text/javascript">
+            $('.timepicker').wickedpicker({twentyFour: false});
+        </script>
+        <!-- Calendar -->
+        <link rel="stylesheet" href="Citas/CSS/jquery-ui.css" />
+        <script src="Citas/JS/jquery-ui.js"></script>
+        <script>
+            $(function () {
+                $("#datepicker,#datepicker1,#datepicker2,#datepicker3").datepicker();
+            });
+
+        </script>
+        <!-- //Calendar -->
+        <script>
+            $("#appointment").submit(function (event) {
+                var parametros = $(this).serialize();
+                $.ajax({
+                    type: "POST",
+                    url: "enviar-mail.php",
+                    data: parametros,
+                    beforeSend: function (objeto) {
+                        $("#resultados_ajax").html("");
+                    },
+                    success: function (datos) {
+                        $("#resultados_ajax").html(datos);
+                    }
+                });
+
+                event.preventDefault();
+            });
+        </script>
+
+    </h:body>
+</html>
