@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+
+        <title>Agendamiento de Citas</title>
+
+        <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+
+        <link href="CSS/style.css" rel="stylesheet" type="text/css"/>
+        <link href="CSS/wickedpicker.css" rel="stylesheet" type="text/css"/>
+        <link href="../../BarraNav/CSS/Prueba/barraprueba.css" rel="stylesheet" type="text/css"/>
+        <link href="../../assets/css/bootstrap.min.css" rel="stylesheet" ></link>
+        <link href="../../assets/css/demo.css" rel="stylesheet" ></link>
+
+    </h:head>
+    <h:body>
+
+        <!--Barra de Navegacion-->
+
+        <div class="header">
+            <section class="wrapper">
+                <nav>
+                    <ul>
+                        <li><a href="index.xhtml">Inicio</a></li>
+
+                        <li><a href="#about">Quienes Somos</a></li>
+                        <li><a href="#service">Servicios</a></li>
+                        <li><a href="#test">Sobre Nosotros</a></li>
+                        <li><a href="#contact">Contactanos</a></li>
+                    </ul>
+                </nav>
+            </section>
+        </div>
+
+        <!--background-->
+        <div class="bg-agile">
+            <div class="book-appointment">
+                <h2>Agenda tu Cita</h2>
+
+                <h:form >
+                    <h:column>
+                        <div id="resultados_ajax" class="gaps"></div>
+                        <div class="left-agileits-w3layouts same">
+                            <img src="Gloss Nail G..jpg"/>
+                        </div>
+
+                        <div class="right-agileinfo same">
+
+                            <div class="gaps">
+
+                                <h:panelGrid columns="1">
+                                    
+                                    <h:outputLabel value="Seleccionar Manicurista" for="selectManicurista" />
+                                    <h:selectOneMenu id="selectManicurista" value="#{agendarCitas.cita.usuarioIdUsuario}">
+                                        <f:selectItems value="#{agendarCitas.usuarios}" var="me" itemLabel="#{me.nombre}" itemValue="#{me.idUsuario}"/>
+                                    </h:selectOneMenu>
+                                    <br/>
+                                    <h:outputLabel value="Tipo de Servicio" for="Tservicio"/>                            
+                                    <h:selectOneMenu id="Tservicio" value="#{agendarCitas.servicio.codigoServicio}" required="false">
+                                        <f:selectItems class="form-control" value="#{agendarCitas.servicios}" var="ts" itemLabel="#{ts.nombre}" itemValue="#{ts.codigoServicio}"/>
+                                    </h:selectOneMenu>
+                                    <br/>
+                                    <h:outputLabel value="Seleccionar Fecha y Hora:"/>
+                                    <p:calendar class="form-control" value="#{agendarCitas.cita.fecha}"/>
+                                    <br/>
+                                    <h:selectOneMenu id="estado" value="#{agendarCitas.cita.estadoCitaIdEstadoCita}" style="display:none">
+                                        <f:selectItems  value="#{agendarCitas.estadoCitas}" var="es" itemLabel="#{es.descripcion}" itemValue="#{es.idEstadoCita}"/>
+                                    </h:selectOneMenu>
+
+                                </h:panelGrid>
+                            </div>
+                        </div>
+
+                        <div class="clear"></div>
+
+                        <p:commandButton class="btn btn-primary" action="#{agendarCitas.registrarCita()}" value="Realizar cita"/>
+                    </h:column>
+                </h:form>
+            </div>
+        </div>
+       
+        <!--copyright-->
+        <div class="copy w3ls">
+            <p><a href="#" target="_blank"></a> </p>
+        </div>
+        <!--//copyright-->
+        <script type="text/javascript" src="Citas/JS/jquery-2.1.4.min.js"></script>
+        <script type="text/javascript" src="Citas/JS/wickedpicker.js"></script>
+        <script type="text/javascript">
+            $('.timepicker').wickedpicker({twentyFour: false});
+        </script>
+    </h:body>
+</html>
